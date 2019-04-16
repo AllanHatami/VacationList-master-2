@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">  
+  <Field
+       ID="{463e7f6a-1264-488c-a9ad-b1a0c7a9910b}"
+       Name="Options"
+       DisplayName="Options"
+       Type="Choice"
+       Required="TRUE"
+       Group="Custom Site Columns">
+
+    <CHOICES>
+      <CHOICE>Vacation</CHOICE>
+      <CHOICE>Leave of absence</CHOICE>
+      <CHOICE>Illness</CHOICE>
+    </CHOICES>
+    <MAPPINGS>
+      <MAPPING Value="1">Vacation</MAPPING>
+      <MAPPING Value="2">Leave of absence</MAPPING>
+      <MAPPING Value="3">Illness</MAPPING>
+    </MAPPINGS>
+    <Default>Not Started</Default>
+    
+  </Field>
+</Elements>
