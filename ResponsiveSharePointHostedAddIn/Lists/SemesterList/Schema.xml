@@ -36,7 +36,6 @@
         <JSLink>clienttemplates.js</JSLink>
         <RowLimit Paged="TRUE">30</RowLimit>
         <ViewFields>
-          
         <FieldRef Name="AssignedTo" /><FieldRef Name="StartDate" /><FieldRef Name="EndDate" /><FieldRef Name="AssignedId" /><FieldRef Name="Options" />
         </ViewFields>
         <Query>

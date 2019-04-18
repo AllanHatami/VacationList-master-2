@@ -5,7 +5,7 @@
        Name="AssignedId"
        DisplayName="Assigned Id"
        Type="Number"
-       Required="FALSE"
+       Required="TRUE"
        Group="Custom Site Columns">
   </Field>
 </Elements>

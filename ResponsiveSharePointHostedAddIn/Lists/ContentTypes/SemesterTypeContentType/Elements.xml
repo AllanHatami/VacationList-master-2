@@ -6,7 +6,7 @@
       <FieldRef ID="{17d86ddd-37b9-40d4-b549-248a0415cc43}" DisplayName="Assigned To" Required="FALSE" Name="AssignedTo" Sealed="TRUE" ShowInDisplayForm="TRUE" ShowInEditForm="TRUE" ShowInListSettings="TRUE" ShowInNewForm="TRUE" />
       <FieldRef ID="{4b3d892b-fcb1-4b7a-936c-84ed8e3cf164}" DisplayName="Start Date" Required="FALSE" Name="StartDate" Format="DateOnly" />
       <FieldRef ID="{e73d59a6-4e7b-4298-8a8c-0f2e5f405946}" DisplayName="End Date" Required="FALSE" Name="EndDate" Format="DateOnly" />
-      <FieldRef ID="{2f0da971-e476-49d6-a380-85786fbe905b}" DisplayName="Assigned Id" Required="FALSE" Name="AssignedId" />
+      <FieldRef ID="{2f0da971-e476-49d6-a380-85786fbe905b}" DisplayName="Assigned Id" Required="TRUE" Name="AssignedId" />
       <FieldRef ID="{463e7f6a-1264-488c-a9ad-b1a0c7a9910b}" DisplayName="Options" Required="TRUE" Name="Options" />
     </FieldRefs>
   </ContentType>

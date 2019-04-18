@@ -9,7 +9,7 @@ $(document).ready(function () {
 	$('#fileFormSubmit').click(function (e) {
 		//Check for edit or new and call update or add function
 		if ($('#myModalLabel').html() === 'Add New Vacation') {
-            addFile($('#assignedToH').val(), $('#startDate').val(), $('#endDate').val(), $('#Options').val());
+            addFile($('#assignedToH').val(), $('#startDate').val(), $('#endDate').val(), $('#options').val());
 		} else {
 			UpdateFiles($('#fileId').val());
 		}
@@ -61,9 +61,11 @@ function PopulateGrid() {
 }
 //Generate html table values
 function GenerateTableFromJson(objArray) {
+    console.log("This is it");
+    console.log(objArray);
 	tableContent =
 		'<table id="FilesTable" class="table table-striped table-bordered" cellspacing="0" width="100%">' +
-    '<thead><tr>' + '<th>ID</th>' + '<th>Assingnet To</th>' + '<th>Start Date</th>' + '<th>End Date</th>' +  '<th>Options</th>' +   // TESTADE OPTIONS
+    '<thead><tr>' + '<th>ID</th>' + '<th>Assingnet To</th>' + '<th>Start Date</th>' + '<th>End Date</th>' +  '<th>Cause Of Abscenes</th>' +   // TESTADE OPTIONS
 		'<th id="idShow1">Assigned Id</th>' + '<th>Actions</th>' + '</tr></thead>';
 	for (var i = 0; i < objArray.length; i++) {
 		var timeEndDate = objArray[i].EndDate;
@@ -71,7 +73,7 @@ function GenerateTableFromJson(objArray) {
 		var timeStartDate = objArray[i].StartDate;
         var lastEditStartDate = timeStartDate.substring(0, timeStartDate.indexOf('T'));
         var Options = objArray[i].Options;      // TESTAR OPTIONS
-		tableContent += '<tr>';
+		tableContent += '<tr id="desc">';
 		tableContent += '<td>' + objArray[i].Id + '</td>';
 		tableContent += '<td>' + objArray[i].AssignedTo.Title + '</td>';
 		tableContent += '<td>' + lastEditStartDate + '</td>';
@@ -85,8 +87,22 @@ function GenerateTableFromJson(objArray) {
 			"<i class='glyphicon glyphicon-remove' title='Delete File'></i></a>&nbsp&nbsp";
 		tableContent += "<a id='" + objArray[i].Id + "' href='#' class='confirmListItemDetailsLink'>" +
 			"<i class='glyphicon glyphicon-cog' title='Link to List Item'></i></a></td>";
-		tableContent += '</tr>';
-		e.push({ start: lastEditStartDate, end: lastEditEndDate, resource: objArray[i].AssignedId.toString(), text: objArray[i].AssignedTo.Title });
+        tableContent += '</tr>';
+
+        var barC;
+        if (Options == "Parental Leave") {
+            barC = "yellow";
+        }
+        else if (Options == "Vacation") {
+            barC = "blue";
+        }
+        else if(Options == "Leave Of Absence") {
+            barC = "green";
+        }
+        else if (Options == "Illness") {
+            barC = "red";
+        }
+        e.push({ start: lastEditStartDate, end: lastEditEndDate, text2: Options, resource: objArray[i].AssignedId.toString(), text: objArray[i].AssignedTo.Title, barColor: barC});
 	}
 	return tableContent;
 }
@@ -116,7 +132,8 @@ $(document).on('click', '.confirmEditFileLink', function (e) {
 
 			$('#assignedToH').val(data.d.AssignedToId);
 			$('#startDate').val(lastEditStartDate);
-			$('#endDate').val(lastEditEndDate);
+            $('#endDate').val(lastEditEndDate);
+            $('#option').val(data.d.Options);
 			$('#fileId').val(data.d.Id);
 			$('#myModalLabel').html('Edit Item');
 			$('#myModalNorm').modal('show');
@@ -128,14 +145,15 @@ $(document).on('click', '.confirmEditFileLink', function (e) {
 $(document).on('click', '.confirmEditFileLink', function (e) {
 	e.preventDefault();
 	var id = this.id;
-	var requestUri = "../_api/web/lists/getByTitle('SemesterList')/items(" + id + ")?$select=ID,EndDate,StartDate,AssignedTo/Title,AssignedTo/Id&$expand=AssignedTo/Title";
+	var requestUri = "../_api/web/lists/getByTitle('SemesterList')/items(" + id + ")?$select=ID,Options,EndDate,StartDate,AssignedTo/Title,AssignedTo/Id&$expand=AssignedTo/Title";
 	$.ajax({
 		url: requestUri,
 		method: "GET",
 		contentType: "application/json;odata=verbose",
 		headers: { "accept": "application/json;odata=verbose" },
 		success: function (data) {
-			$('#assignedTo').val(data.d.AssignedTo.Title);
+            $('#assignedTo').val(data.d.AssignedTo.Title);
+            $('#option').val(data.Options);
 		}
 	});
 });
@@ -204,7 +222,7 @@ function UpdateFiles(id) {
 	var assignedTo = $("#assignedToH").val();
 	var startDate = $("#startDate").val();
     var endDate = $("#endDate").val();
-    var Options = $("#Options").val();       // TESTAR OPTIONS
+    var options = $("#options").val();       // TESTAR OPTIONS
 	var eTag = $("#etag").val();
 	var requestUri = "../_api/web/lists/getByTitle('SemesterList')/items(" + id + ")";
 	var requestHeaders = {
@@ -218,7 +236,7 @@ function UpdateFiles(id) {
 		AssignedToId: assignedTo,
 		StartDate: startDate,
 		EndDate: endDate,
-        Options: Options
+        Options: options
 	};
 	var requestBody = JSON.stringify(fileData);
 
@@ -231,7 +249,7 @@ function UpdateFiles(id) {
 	});
 }
 //Add File function
-var addFile = function (assignedTo, startDate, endDate, Options) {   // TESTAR OPTIONS
+var addFile = function (assignedTo, startDate, endDate, options) {   // TESTAR OPTIONS
 	var requestUri = "../_api/web/lists/getByTitle('SemesterList')/items";
 	var requestHeaders = {
 		"accept": "application/json;odata=verbose",
@@ -242,11 +260,11 @@ var addFile = function (assignedTo, startDate, endDate, Options) {   // TESTAR O
 	};
 	var fileData = {
 		__metadata: { "type": "SP.Data.SemesterListListItem" },
-		AssignedToId: assignedTo,
+		AssignedToId: assignedTo,    // AssignedToId: assignedTo,
 		StartDate: startDate,
 		EndDate: endDate,
-        AssignedId: assignedTo,
-        Options: Options    // TESTAR OPTIONS
+        AssignedId: assignedTo,      //    AssignedId: assignedTo,
+        Options: options    // TESTAR OPTIONS
 	};
 	var requestBody = JSON.stringify(fileData);
 	return $.ajax({
@@ -354,13 +372,13 @@ function loading() {
 			dp.events.list.push(e[i]);
 		}
 
-		dp.onBeforeEventRender = function (args) {
-			args.data.bubbleHtml = "<div><b>" + args.data.text + "</b></div><div>Start: " + new DayPilot.Date(args.data.start).toString("yyyy/M/d") + "</div><div>End: " + new DayPilot.Date(args.data.end).toString("yyyy/M/d") + "</div>";
+        dp.onBeforeEventRender = function (args) {
+            args.data.bubbleHtml = +"<div><b>" + args.data.text + "</b></div><div>Start: " + new DayPilot.Date(args.data.start).toString("yyyy/M/d") +"</div><div>End: " + new DayPilot.Date(args.data.end).toString("yyyy/M/d") + "</div>";
 		};
 		dp.init();
 		$(".scheduler_default_corner").css({
 			"background": "rgb(243, 243, 243)", "font-size": "17px", "text-align": "-webkit-center"
-		});
+        });
 		$(".scheduler_default_corner").html("Semester List");
 	}, 1000);
 }

@@ -11,7 +11,7 @@
 	font-size: 10px;
 }
 #toolbar {
-	margin: 5px 0 0 -14px;
+	margin: 5px 0;
 }
 
 #dp .scheduler_default_cellparent, .scheduler_default_cell.scheduler_default_cell_business.scheduler_default_cellparent {
@@ -24,7 +24,18 @@
 }
 .scheduler_default_main {
 	bottom: 98px;
+    top:0px;
+    width:67%;
 }
 #idShow, #idShow1 {
 	display: none;
+}
+
+#desc td {
+    text-align :center;
+}
+
+
+#contentBox {
+    margin-left: 4px
 }

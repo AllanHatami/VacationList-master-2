@@ -9,16 +9,20 @@
        Group="Custom Site Columns">
 
     <CHOICES>
+      <CHOICE>Parental Leave</CHOICE>
       <CHOICE>Vacation</CHOICE>
       <CHOICE>Leave of absence</CHOICE>
       <CHOICE>Illness</CHOICE>
     </CHOICES>
     <MAPPINGS>
-      <MAPPING Value="1">Vacation</MAPPING>
-      <MAPPING Value="2">Leave of absence</MAPPING>
-      <MAPPING Value="3">Illness</MAPPING>
+      <MAPPING>Parental Leave</MAPPING>
+      <MAPPING>Vacation</MAPPING>
+      <MAPPING>Leave of absence</MAPPING>
+      <MAPPING>Illness</MAPPING>
     </MAPPINGS>
     <Default>Not Started</Default>
-    
+
+
+
   </Field>
 </Elements>

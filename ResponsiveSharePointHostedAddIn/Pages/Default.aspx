@@ -77,26 +77,33 @@
                   </div>
                   <div class="form-group">
                     <label>Start Date</label>
-                      <input type="text" class="form-control" id="startDate"/>
+                      <input type="text" class="form-control" id="startDate" autocomplete="off"/>
                   </div>
                      <div class="form-group">
                     <label>End Date</label>
-                      <input type="text" class="form-control" id="endDate"/>
+                      <input type="text" class="form-control" id="endDate" autocomplete="off"/>
                   </div>
                   <div class="form-group" >
               <%--      <label>Options</label>
                       <input type="text" class="form-control" id="option"/>--%>
 
-    <label>Options</label> <br>
-    <select type="text" class="form-control" id="option>
-    <option label=" "></option>
-    <option value="1"></option>
-    <option value="2">Vacation</option>
-    <option value="3">Leave of absence</option>
-    <option value="4">Illness</option>
-    </select>
+               <%--   <label>Options</label> <br>
+                   <select type="text" class="form-control" id="option">
+                     <option value="1"></option>
+                     <option value="2">Vacation</option>
+                     <option value="3">Leave of absence</option>
+                     <option value="4">Illness</option>
+                   </select>
+                  </div>--%>
 
-                  </div>
+                      <label>Option</label> <br />
+                    <select type="text" class="form-control" id="options" value="">  
+                        <option selected disabled hidden></option>
+                        <option>Vacation</option>
+                        <option>Parental Leave</option>
+                        <option>Leave of absence</option>
+                        <option>Illness</option>
+                    </select>
 
                       <!-- hidden controls -->
                   <div style="display: none">
